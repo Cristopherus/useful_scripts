@@ -1,0 +1,6 @@
+#!/bin/bash
+
+app=$1
+
+$app &
+ps -aux |grep $app | awk 'NR==1{print $2}' >> /home/cristoph/session

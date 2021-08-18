@@ -1,0 +1,10 @@
+#!/bin/bash
+
+var="$1"
+if [ ! -z "$var" ]
+then
+  nmcli con down id $var
+fi
+
+nmcli radio wifi off
+nmcli radio wifi on

@@ -1,0 +1,8 @@
+#!/bin/bash
+
+app_list=("firefox" "google-chrome-stable" "teams" "skype" "subl")
+touch /home/cristoph/session
+for app in ${app_list[@]}
+do
+  run_app $app
+done

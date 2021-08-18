@@ -1,0 +1,56 @@
+#!/bin/bash
+echo "Updating machine"
+ln -s $PWD/apt-upgrade /usr/bin/apt-upgrade
+apt-upgrade
+
+echo "Installing git"
+apt install git -y
+git --version
+
+echo "Installing Teams"
+curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - 
+sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/ms-teams stable main" > /etc/apt/sources.list.d/teams.list'
+apt update
+apt install teams -y
+
+echo "Installing Brave"
+apt install apt-transport-https curl gnupg
+curl -s https://brave-browser-apt-release.s3.brave.com/brave-core.asc | apt-key --keyring /etc/apt/trusted.gpg.d/brave-browser-release.gpg add -
+echo "deb [arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main" | tee /etc/apt/sources.list.d/brave-browser-release.list
+apt update
+apt install brave-browser -y
+
+echo "Changing clock"
+./clock
+
+echo "Adding other useful scripts"
+ln -s $PWD/connect /usr/bin/connect
+ln -s $PWD/disconnect /usr/bin/disconnect
+ln -s $PWD/find_ec2 /usr/bin/find_ec2
+ln -s $PWD/git-amend /usr/bin/git-amend
+ln -s $PWD/git-create /usr/bin/git-create
+ln -s $PWD/reconnect /usr/bin/reconnect
+ln -s $PWD/ssh-ec2 /usr/bin/ssh-ec2
+
+echo "Installing AWS CLI"
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+apt install unzip -y
+unzip awscliv2.zip
+./aws/install
+rm awscliv2.zip
+rm -rf aws/
+
+echo "Installing OpenVPN"
+apt install apt-transport-https
+wget https://swupdate.openvpn.net/repos/openvpn-repo-pkg-key.pub
+apt-key add openvpn-repo-pkg-key.pub
+DISTRO=$(lsb_release -a 2>/dev/null |grep Codename | awk '{ print $2 }')
+wget -O /etc/apt/sources.list.d/openvpn3.list https://swupdate.openvpn.net/community/openvpn3/repos/openvpn3-$DISTRO.list
+apt update
+apt install openvpn3
+openvpn3 config-import --config files/conf.ovpn
+
+echo "Installing terminator"
+add-apt-repository ppa:gnome-terminator
+apt-get update
+apt-get install terminator

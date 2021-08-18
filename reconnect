@@ -1,0 +1,9 @@
+#!/bin/bash
+
+var="$1"
+
+echo 'Disconnect'
+disconnect
+sleep 5
+echo "Connect $var"
+connect $var

@@ -1,0 +1,8 @@
+#!/bin/bash
+
+filename='session'
+
+while read line
+do
+  kill $line
+done < $filename

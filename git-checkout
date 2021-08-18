@@ -1,0 +1,5 @@
+#!/bin/bash
+
+FILTER=$1
+
+git checkout $(git branch |grep $FILTER | awk '{print $1}')

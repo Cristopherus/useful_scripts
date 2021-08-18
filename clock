@@ -1,0 +1,7 @@
+#!/bin/bash
+current_status=$(gsettings get org.gnome.desktop.interface clock-show-seconds)
+toggle="true"
+if [[ "$current_status" == "true" ]]; then
+    toggle="false"
+fi
+gsettings set org.gnome.desktop.interface clock-show-seconds $toggle

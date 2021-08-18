@@ -1,0 +1,13 @@
+#!/bin/bash
+
+apt update
+apt list --upgradable
+apt upgrade
+
+REBOOT="$(find /var/run/reboot-required 2>/dev/null )"
+CONDITION='/var/run/reboot-required'
+if [ "$REBOOT" = "$CONDITION" ] 
+then
+      reboot now
+fi
+apt autoremove

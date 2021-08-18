@@ -1,0 +1,5 @@
+#!/bin/bash
+
+var="$1"
+
+nmcli con up $var --ask
