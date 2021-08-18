@@ -1,6 +1,6 @@
 #!/bin/bash
 
-app_list=("firefox" "google-chrome-stable" "teams" "skype" "subl")
+app_list=("firefox" "google-chrome-stable" "teams" "skype" "subl" "keepass2")
 touch /home/cristoph/session
 for app in ${app_list[@]}
 do
