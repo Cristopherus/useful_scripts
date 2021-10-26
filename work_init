@@ -1,8 +1,19 @@
 #!/bin/bash
 
 app_list=("firefox" "google-chrome-stable" "teams" "skype" "subl" "keepass2")
-touch /home/cristoph/session
+running_apps=("firefox" "chrome" "teams" "skypeforlinux" "sublime_text" "cli")
+
 for app in ${app_list[@]}
 do
-  run_app $app
+  $app 2>/dev/null &
 done
+
+for app in ${running_apps[@]}
+do
+  until pidof $app >> /dev/null
+  do
+    sleep 1
+  done
+done
+
+sleep 5; spd-say 'everything ready'

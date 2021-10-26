@@ -1,8 +1,13 @@
 #!/bin/bash
 
-filename='session'
-
-while read line
+kill_list=
+app_list=("firefox" "chrome" "teams" "skype" "subl" "keepass2")
+for app in ${app_list[@]}
 do
-  kill $line
-done < $filename
+  kill_list+=($(ps -aux |grep $app | awk 'NR==1{print $2}'))
+done
+
+for app in ${kill_list[@]}
+do
+  kill $app
+done
